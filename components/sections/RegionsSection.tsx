@@ -9,14 +9,14 @@ export function RegionsSection() {
   }
 
   return (
-    <section className="py-12 lg:py-16 bg-white">
+    <section className="py-12 lg:py-16 bg-cream">
       <div className="max-w-7xl mx-auto px-4 space-y-8">
         {/* Header */}
         <div>
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
+          <h2 className="text-2xl lg:text-3xl font-bold text-earth">
             지역별 도시
           </h2>
-          <p className="text-gray-600 mt-2">전국 6개 지역에서 노마드 도시를 찾아보세요</p>
+          <p className="text-earth/70 mt-2">전국 6개 지역에서 노마드 도시를 찾아보세요</p>
         </div>
 
         {/* Regions Grid */}
@@ -26,19 +26,19 @@ export function RegionsSection() {
             return (
               <Card
                 key={region.name}
-                className="p-6 hover:shadow-lg hover:scale-105 transition-all cursor-pointer group"
+                className="p-6 hover:shadow-nature-lg hover:scale-105 transition-all cursor-pointer group rounded-3xl border-2 border-sand bg-gradient-to-br from-cream to-sage/10"
               >
                 <div className="space-y-4">
                   <div className="text-4xl">{region.emoji}</div>
                   <div>
-                    <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-bold text-lg text-earth group-hover:text-forest transition-colors">
                       {region.label}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-moss mt-1">
                       {cityCount}개 도시
                     </p>
                   </div>
-                  <div className="flex items-center text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center text-forest opacity-0 group-hover:opacity-100 transition-opacity">
                     <span className="text-sm font-medium">더 보기</span>
                     <ChevronRight size={16} />
                   </div>

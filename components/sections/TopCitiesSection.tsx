@@ -30,24 +30,24 @@ export function TopCitiesSection() {
   }
 
   return (
-    <section className="py-12 lg:py-16 bg-gray-50">
+    <section className="py-12 lg:py-16 bg-sand">
       <div className="max-w-7xl mx-auto px-4">
         <div className="space-y-8">
           {/* Header */}
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
+            <h2 className="text-2xl lg:text-3xl font-bold text-earth">
               인기 도시 TOP 6
             </h2>
             <div className="hidden lg:flex gap-2">
               <button
                 onClick={() => scroll('left')}
-                className="p-2 rounded-full border border-gray-300 hover:bg-gray-200 transition-colors"
+                className="p-2 rounded-full border-2 border-forest bg-cream hover:bg-sage/30 transition-all shadow-nature text-forest"
               >
                 <ChevronLeft size={20} />
               </button>
               <button
                 onClick={() => scroll('right')}
-                className="p-2 rounded-full border border-gray-300 hover:bg-gray-200 transition-colors"
+                className="p-2 rounded-full border-2 border-forest bg-cream hover:bg-sage/30 transition-all shadow-nature text-forest"
               >
                 <ChevronRight size={20} />
               </button>

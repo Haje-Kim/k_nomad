@@ -12,7 +12,22 @@
       "Bash(findstr:*)",
       "Bash(powershell -Command \"Stop-Process -Id 23180 -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 2; Write-Host ''Process killed''\")",
       "Bash(curl:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git worktree:*)",
+      "Bash(npm install)",
+      "Bash(if [ -d .claude/skills ])",
+      "Bash(then ls -la .claude/skills/)",
+      "Bash(else echo \"Directory does not exist\")",
+      "Bash(fi)",
+      "Bash(if [ -d worktree ])",
+      "Bash(then ls -la worktree/)",
+      "Bash(if [ -d .claude/commands ])",
+      "Bash(then ls -la .claude/commands/)",
+      "Bash(test:*)",
+      "Bash(tasklist:*)",
+      "Bash(PORT=4003 npm run dev:*)",
+      "Bash(npx shadcn@latest add:*)"
     ]
   }
 }

@@ -25,7 +25,26 @@ npm run lint
 
 # Type check (catch TS errors without building)
 npx tsc --noEmit
+
+# Clean build artifacts
+rm -rf .next node_modules package-lock.json && npm install
 ```
+
+## Custom Commands
+
+### create-designs
+Parallel UI design variant generation using git worktrees. Creates 4 independent design variants with separate development servers.
+
+**Usage**: `create-designs <theme1> <theme2> <theme3> <theme4>`
+
+**Example**: `create-designs dark neon minimal glassmorphism`
+
+This command:
+1. Creates worktree instances (`./worktree/agent-1` through `agent-4`)
+2. Each agent applies a different design theme to the UI
+3. Starts separate dev servers on ports 4001-4004 for side-by-side preview
+4. Automatically fixes errors during startup
+5. Allows comparing design variants in real-time
 
 ## Code Architecture
 
@@ -132,6 +151,7 @@ Data is separated by domain:
 - **Type safety**: All components are strictly typed; no `any` types
 - **Re-exports**: `types/index.ts` centralizes type imports for cleaner component imports
 - **Union types**: Region and BudgetRange are discriminated unions for type-safe filtering
+- **Strict mode**: `tsconfig.json` has `strict: true` enabled; always fix type errors before committing
 
 ## Common Development Tasks
 
@@ -239,6 +259,17 @@ To extend this project:
 - **Lighthouse**: Target score > 90 (unoptimized baseline meets this)
 - **Bundle size**: Minimal due to Shadcn tree-shaking and Tailwind v4 JIT compilation
 
+## Custom Command Architecture
+
+Custom commands are defined in `.claude/commands/` as markdown files. These provide persona-driven, multi-agent workflows:
+
+- **File structure**: `.claude/commands/<command-name>.md`
+- **Format**: Markdown with Persona and 작업 sections
+- **Execution**: Currently requires manual invocation through task agents (Claude Code doesn't auto-register markdown commands)
+- **Multi-agent pattern**: Commands can spawn parallel sub-agents using git worktrees for concurrent work
+
+**Extending commands**: Add new `.md` files to `.claude/commands/` and invoke manually via task agents or as documented instructions.
+
 ## Known Limitations and Design Decisions
 
 1. **Hard-coded city count in RegionsSection** - Dynamically counts cities per region from mock data (avoids mismatch with constants)
@@ -246,3 +277,4 @@ To extend this project:
 3. **No dark mode currently** - CSS color system supports dark mode (in globals.css), but toggle not implemented
 4. **Mobile menu overlay** - Header hamburger menu uses absolute positioning; blocks interaction behind menu when open (intentional UX)
 5. **Like button is cosmetic** - Saves to component state only, not persisted to backend
+6. **Custom commands not auto-registered** - Markdown files in `.claude/commands/` must be invoked manually as they're not part of Claude Code's skill system

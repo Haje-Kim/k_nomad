@@ -1,0 +1,137 @@
+
+> k_nomad@0.1.0 dev
+> next dev
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of D:\user\Documents\hj_works\08_Study\k_nomad\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * D:\user\Documents\hj_works\08_Study\k_nomad\worktree\agent-3\package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:4003
+- Network:       http://172.30.240.1:4003
+
+✓ Starting...
+✓ Ready in 95.2s
+○ Compiling / ...
+⨯ ./worktree/agent-3/app/globals.css:2108:8
+Parsing CSS source code failed
+[0m [90m 2106 |[39m   initial[33m-[39mvalue[33m:[39m [35m0[39m[33m;[39m
+ [90m 2107 |[39m }
+[31m[1m>[22m[39m[90m 2108 |[39m [33m@[39m[36mimport[39m url([32m'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap'[39m)[33m;[39m
+ [90m      |[39m        [31m[1m^[22m[39m
+ [90m 2109 |[39m [33m:[39mroot {
+ [90m 2110 |[39m   [33m--[39mfont[33m-[39mnature[33m:[39m [32m'Noto Serif KR'[39m[33m,[39m [33mGeorgia[39m[33m,[39m serif[33m;[39m
+ [90m 2111 |[39m   [33m--[39mradius[33m:[39m [35m1[39mrem[33m;[39m[0m
+
+@import rules must precede all rules aside from @charset and @layer statements
+
+Import trace:
+  Client Component Browser:
+    ./worktree/agent-3/app/globals.css [Client Component Browser]
+    ./worktree/agent-3/app/layout.tsx [Server Component]
+
+
+○ Compiling /_error ...
+ GET / 500 in 93s (compile: 93s, render: 373ms)
+⨯ ./worktree/agent-3/app/globals.css:2108:8
+Parsing CSS source code failed
+[0m [90m 2106 |[39m   initial[33m-[39mvalue[33m:[39m [35m0[39m[33m;[39m
+ [90m 2107 |[39m }
+[31m[1m>[22m[39m[90m 2108 |[39m [33m@[39m[36mimport[39m url([32m'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap'[39m)[33m;[39m
+ [90m      |[39m        [31m[1m^[22m[39m
+ [90m 2109 |[39m [33m:[39mroot {
+ [90m 2110 |[39m   [33m--[39mfont[33m-[39mnature[33m:[39m [32m'Noto Serif KR'[39m[33m,[39m [33mGeorgia[39m[33m,[39m serif[33m;[39m
+ [90m 2111 |[39m   [33m--[39mradius[33m:[39m [35m1[39mrem[33m;[39m[0m
+
+@import rules must precede all rules aside from @charset and @layer statements
+
+Import trace:
+  Client Component Browser:
+    ./worktree/agent-3/app/globals.css [Client Component Browser]
+    ./worktree/agent-3/app/layout.tsx [Server Component]
+
+
+ GET / 500 in 104ms (compile: 88ms, render: 16ms)
+⨯ ./worktree/agent-3/app/globals.css:2108:8
+Parsing CSS source code failed
+[0m [90m 2106 |[39m   initial[33m-[39mvalue[33m:[39m [35m0[39m[33m;[39m
+ [90m 2107 |[39m }
+[31m[1m>[22m[39m[90m 2108 |[39m [33m@[39m[36mimport[39m url([32m'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap'[39m)[33m;[39m
+ [90m      |[39m        [31m[1m^[22m[39m
+ [90m 2109 |[39m [33m:[39mroot {
+ [90m 2110 |[39m   [33m--[39mfont[33m-[39mnature[33m:[39m [32m'Noto Serif KR'[39m[33m,[39m [33mGeorgia[39m[33m,[39m serif[33m;[39m
+ [90m 2111 |[39m   [33m--[39mradius[33m:[39m [35m1[39mrem[33m;[39m[0m
+
+@import rules must precede all rules aside from @charset and @layer statements
+
+Import trace:
+  Client Component Browser:
+    ./worktree/agent-3/app/globals.css [Client Component Browser]
+    ./worktree/agent-3/app/layout.tsx [Server Component]
+
+
+ GET / 500 in 65ms (compile: 44ms, render: 20ms)
+⨯ ./worktree/agent-3/app/globals.css:2108:8
+Parsing CSS source code failed
+[0m [90m 2106 |[39m   initial[33m-[39mvalue[33m:[39m [35m0[39m[33m;[39m
+ [90m 2107 |[39m }
+[31m[1m>[22m[39m[90m 2108 |[39m [33m@[39m[36mimport[39m url([32m'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap'[39m)[33m;[39m
+ [90m      |[39m        [31m[1m^[22m[39m
+ [90m 2109 |[39m [33m:[39mroot {
+ [90m 2110 |[39m   [33m--[39mfont[33m-[39mnature[33m:[39m [32m'Noto Serif KR'[39m[33m,[39m [33mGeorgia[39m[33m,[39m serif[33m;[39m
+ [90m 2111 |[39m   [33m--[39mradius[33m:[39m [35m1[39mrem[33m;[39m[0m
+
+@import rules must precede all rules aside from @charset and @layer statements
+
+Import trace:
+  Client Component Browser:
+    ./worktree/agent-3/app/globals.css [Client Component Browser]
+    ./worktree/agent-3/app/layout.tsx [Server Component]
+
+
+ GET / 500 in 174ms (compile: 162ms, render: 12ms)
+✓ Compiled in 852ms
+ GET / 200 in 3.2s (compile: 2.8s, render: 395ms)
+ GET / 200 in 93ms (compile: 3ms, render: 90ms)
+ GET / 200 in 292ms (compile: 5ms, render: 287ms)
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?busan%2Chaeundae%2Cbeach,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?jeju%2Cbeach%2Ccity,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seogwipo%2Ccoast%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seoul%2Cskyline%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?yeosu%2Cnight%2Ckorea,korea,city 503
+✓ Compiled in 155ms
+✓ Compiled in 78ms
+✓ Compiled in 69ms
+✓ Compiled in 94ms
+✓ Compiled in 69ms
+ GET / 200 in 720ms (compile: 232ms, render: 487ms)
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seogwipo%2Ccoast%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seoul%2Cskyline%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?busan%2Chaeundae%2Cbeach,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?yeosu%2Cnight%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?jeju%2Cbeach%2Ccity,korea,city 503
+ GET / 200 in 221ms (compile: 7ms, render: 213ms)
+ GET / 200 in 263ms (compile: 9ms, render: 254ms)
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seogwipo%2Ccoast%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?jeju%2Cbeach%2Ccity,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seoul%2Cskyline%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?busan%2Chaeundae%2Cbeach,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?yeosu%2Cnight%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?gangneung%2Cbeach%2Ckorea,korea,city 503
+ GET / 200 in 439ms (compile: 9ms, render: 430ms)
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?jeju%2Cbeach%2Ccity,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seogwipo%2Ccoast%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seoul%2Cskyline%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?gangneung%2Cbeach%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?busan%2Chaeundae%2Cbeach,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?yeosu%2Cnight%2Ckorea,korea,city 503
+ GET / 200 in 552ms (compile: 9ms, render: 543ms)
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?jeju%2Cbeach%2Ccity,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seogwipo%2Ccoast%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?seoul%2Cskyline%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?busan%2Chaeundae%2Cbeach,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?gangneung%2Cbeach%2Ckorea,korea,city 503
+⨯ upstream image response failed for https://source.unsplash.com/800x600/?yeosu%2Cnight%2Ckorea,korea,city 503

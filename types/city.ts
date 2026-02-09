@@ -1,16 +1,10 @@
-export type Region = '수도권' | '충청' | '전라' | '경상' | '강원' | '제주'
+// 새로운 타입 정의
+export type Environment = '자연친화' | '도심선호' | '카페작업' | '코워킹 필수'
+export type Season = '봄' | '여름' | '가을' | '겨울'
 
-export type BudgetRange = 'economic' | 'moderate' | 'premium'
+export type Region = '수도권' | '경상도' | '전라도' | '강원도' | '제주도' | '충청도'
 
-export interface CityStats {
-  livingCost: number // Monthly in 만원
-  internetSpeed: number // Mbps
-  cafeCount: number
-  temperature: number // Celsius
-  weather: string // Emoji
-  safetyScore: number // 0-5
-  aqi: number // Air Quality Index
-}
+export type BudgetRange = 'under100' | 'range100to200' | 'over200'
 
 export interface City {
   id: string
@@ -19,9 +13,10 @@ export interface City {
   region: Region
   image: string // Unsplash keyword
   totalScore: number
-  stats: CityStats
-  rating: number
-  reviewCount: number
+  environment: Environment[]
+  bestSeason: Season[]
+  likes: number
+  dislikes: number
   tags: string[]
   budget: BudgetRange
 }

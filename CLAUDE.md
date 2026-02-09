@@ -58,23 +58,20 @@ The app uses a hierarchical component structure:
   - Rendered in `app/layout.tsx`, wrapping all pages
 
 - **Page Composition** (`app/page.tsx`)
-  - Composes 7 section components in order: HeroSection → StatsSection → TopCitiesSection → RegionsSection → BudgetSection → ReviewsSection → CTASection
-  - Server component by default, can add client directives as needed
+  - Composes 3 section components in order: HeroSection → CityListSection → CTASection
+  - Client component (uses useState for filter management)
+  - Pages: Home (`/`), Login (`/login`), Signup (`/signup`)
 
 - **Section Components** (`components/sections/`)
-  - `HeroSection.tsx` - Search bar + quick filter chips
-  - `StatsSection.tsx` - 4 stat cards grid (30+ cities, 500+ reviews, avg rating, visitors)
-  - `TopCitiesSection.tsx` - Horizontal carousel of top 6 cities with scroll controls
-  - `RegionsSection.tsx` - 6 region cards grid (with dynamic city counts)
-  - `BudgetSection.tsx` - 3 budget category cards (economic/moderate/premium)
-  - `ReviewsSection.tsx` - 3 most recent review cards with user avatars
+  - `HeroSection.tsx` - 4-category filter UI (Budget, Region, Environment, Season) with search bar and reset button
+  - `CityListSection.tsx` - Grid display of filtered cities sorted by likes, with real-time filtering using useMemo
   - `CTASection.tsx` - Signup call-to-action with email input and social login buttons
 
 - **Reusable Components** (`components/city/`)
-  - `CityCard.tsx` - City display component used across sections
-    - Props: `city: City`, `variant?: 'default' | 'compact'`
-    - Features: Image with 16:9 aspect ratio, stats grid (cost/internet/cafes/weather), rating display, like button, action button
-    - Client component with `useState` for like button interactivity
+  - `CityCard.tsx` - City display component with interactive like/dislike buttons
+    - Props: `city: City`
+    - Features: Image with 16:9 aspect ratio, filter info display (budget/region/environment/season), likes/dislikes counters, interactive thumb buttons
+    - Client component with `useState` for like/dislike button interactivity
 
 - **Shadcn UI Components** (`components/ui/`)
   - Pre-built accessible components: Button, Card, Input, Badge, Separator, Avatar, Dialog, DropdownMenu
@@ -85,19 +82,23 @@ The app uses a hierarchical component structure:
 Data is separated by domain:
 
 - **Types** (`types/`)
-  - `city.ts` - City interface with CityStats, Region, and BudgetRange types
-  - `review.ts` - Review interface
+  - `city.ts` - City interface, Environment, Season, Region, and BudgetRange union types
+  - `review.ts` - Review interface (for future use)
+  - `supabase.ts` - Supabase database types
   - `index.ts` - Re-exports for cleaner imports
 
 - **Mock Data** (`lib/data/`)
-  - `cities.ts` - Array of 10 City objects with all required fields (id, name, nameEn, region, image keyword, totalScore, stats object with 7 metrics, rating, reviewCount, tags array, budget category)
-  - `reviews.ts` - Array of 3 Review objects + stats array for StatsSection
-  - `constants.ts` - REGIONS (6 items), BUDGETS (3 items), QUICK_FILTERS (4 items) - used for configurable UI
+  - `cities.ts` - Array of 10 City objects with fields: id, name, nameEn, region, image, totalScore, environment[], bestSeason[], likes, dislikes, tags[], budget
+  - `constants.ts` - Filter configuration arrays:
+    - REGIONS (7 items including '전체')
+    - BUDGETS (3 items: under100, range100to200, over200)
+    - ENVIRONMENTS (4 items: 자연친화, 도심선호, 카페작업, 코워킹 필수)
+    - SEASONS (4 items: 봄, 여름, 가을, 겨울)
 
 - **Image Handling** (`lib/unsplash.ts`)
-  - `getUnsplashImage(keyword: string, size?: string)` - Generates Unsplash API URLs
-  - `cityImageMap` - Maps image keywords to generated URLs
-  - Images use Unsplash search API: `https://source.unsplash.com/[size]/?[keyword],korea,city`
+  - `getUnsplashImage(imageKey: string)` - Generates Unsplash Source API URLs
+  - Images use Unsplash Source API: `https://source.unsplash.com/800x600/?[imageKey]`
+  - Configured in `next.config.ts` with remotePatterns for source.unsplash.com
 
 ### Styling Architecture
 
@@ -114,22 +115,28 @@ Data is separated by domain:
 
 1. **Mock data sources** (`lib/data/`) → Imported by components
 2. **Components render** using TypeScript types from `types/`
-3. **Unsplash URLs** generated dynamically in CityCard via `lib/unsplash.ts`
-4. **Next.js Image** component optimizes images with responsive `sizes` attribute
-5. **Client state** (useState) used sparingly:
-   - CityCard: Like button toggle
-   - Header: Mobile menu open/close
-   - TopCitiesSection: Carousel scroll position
-   - CTASection: Email input value
-   - Other sections: UI-only (no backend submission)
+3. **Filter state** managed in `app/page.tsx` and passed down to HeroSection and CityListSection
+4. **Unsplash URLs** generated dynamically in CityCard via `lib/unsplash.ts`
+5. **Next.js Image** component optimizes images with responsive `sizes` attribute
+6. **Client state** (useState) used for:
+   - app/page.tsx: Filter state (budget, region, environment, season)
+   - CityCard: Like/dislike button toggles with mutual exclusivity
+   - Header: Mobile menu open/close, user authentication state
+   - CTASection: Email input value (UI-only, no backend submission)
 
 ## Key Implementation Details
 
 ### Client vs Server Components
 
-- **Server Components** (default): HeroSection, StatsSection, RegionsSection, BudgetSection, ReviewsSection, CTASection
-- **Client Components** (`'use client'`): Header (for mobile menu), CityCard (for like button), TopCitiesSection (for carousel scroll)
-- **Page/Layout**: Mixed, Header wraps entire app in layout
+- **Client Components** (`'use client'`):
+  - app/page.tsx (for filter state management)
+  - Header (for mobile menu and auth state)
+  - CityCard (for like/dislike buttons)
+  - HeroSection (receives filter props)
+  - CityListSection (receives filter props, uses useMemo for performance)
+  - CTASection (for email input)
+  - Login/Signup pages (for form handling)
+- **Server Components** (default): Layout, Footer
 
 ### Image Optimization
 
@@ -159,30 +166,34 @@ Data is separated by domain:
 
 1. Update `lib/data/cities.ts`:
    - Add new City object to array
-   - Include all required fields: id, name, nameEn, region, image, totalScore, stats (7 metrics), rating, reviewCount, tags, budget
-   - Use region name exactly matching REGIONS in `lib/data/constants.ts`
+   - Include all required fields: id, name, nameEn, region, image, totalScore, environment[], bestSeason[], likes, dislikes, tags[], budget
+   - Use region name exactly matching Region type ('수도권' | '경상도' | '전라도' | '강원도' | '제주도' | '충청도')
+   - budget must be 'under100' | 'range100to200' | 'over200'
+   - environment array can include: '자연친화', '도심선호', '카페작업', '코워킹 필수'
+   - bestSeason array can include: '봄', '여름', '가을', '겨울'
 
 2. New region or budget category:
-   - Update corresponding array in `lib/data/constants.ts`
-   - Update Region or BudgetRange type in `types/city.ts` if new region/category added
+   - Update Region or BudgetRange type in `types/city.ts`
+   - Update corresponding constant array in `lib/data/constants.ts`
 
 3. Image keyword:
    - Use descriptive, comma-separated keywords in the `image` field
-   - Final URL generation adds `,korea,city` suffix
+   - Example: 'jeju,beach,city' or 'seoul,skyline,korea'
 
 ### Modifying Section Content
 
-- **Configuration data**: Edit `lib/data/constants.ts` (REGIONS, BUDGETS, QUICK_FILTERS)
+- **Filter configuration**: Edit `lib/data/constants.ts` (REGIONS, BUDGETS, ENVIRONMENTS, SEASONS)
 - **Section layout**: Modify component JSX (grid cols, spacing, colors)
-- **Mock data**: Update relevant file in `lib/data/`
+- **Mock data**: Update `lib/data/cities.ts`
 - **Styling**: Update Tailwind classes directly in component (no separate CSS files)
 
 ### Adding Interactivity
 
-1. Identify which components need state (currently: Header, CityCard, TopCitiesSection, CTASection)
+1. Identify which components need state (currently: app/page.tsx, Header, CityCard, HeroSection, CityListSection, CTASection)
 2. Add `'use client'` directive at top of file
-3. Import `useState` from React
-4. Use state for: toggle buttons (like), form inputs (email), scroll positions (carousel), menu visibility
+3. Import `useState` and `useMemo` from React as needed
+4. Use state for: filter selections, toggle buttons (like/dislike), form inputs, menu visibility
+5. Use useMemo for: expensive filtering/sorting operations to optimize re-renders
 
 ### Testing Responsive Design
 
@@ -217,36 +228,51 @@ Data is separated by domain:
 ## Image Domains Configuration
 
 The `next.config.ts` file allows images from:
-- `source.unsplash.com` - City images
-- `i.pravatar.cc` - User avatar placeholders in reviews
+- `images.unsplash.com` - Direct Unsplash image URLs (fallback)
+- `source.unsplash.com` - Unsplash Source API for city images
+- `i.pravatar.cc` - User avatar placeholders
 
 This enables Next.js Image optimization for external domains.
 
 ## Notes and Constraints
 
-### Current Scope (UI Only)
+### Current Scope
 
-✅ All sections fully implemented and responsive
-✅ 10 cities with complete mock data
-✅ Unsplash image integration
-✅ Interactive components (like button, carousel, mobile menu)
-✅ TypeScript strict mode
-✅ Accessibility-friendly (semantic HTML, alt text)
+✅ **Completed Features:**
+- 3 core sections: HeroSection (filters), CityListSection (grid), CTASection
+- 10 cities with diversified mock data (varied environment, seasons, likes/dislikes)
+- 4-category real-time filtering system (Budget, Region, Environment, Season)
+- Interactive like/dislike buttons with mutual exclusivity
+- Unsplash Source API integration for dynamic images
+- Supabase authentication (login/signup pages)
+- TypeScript strict mode with zero errors
+- Performance-optimized with useMemo hooks
+- Responsive design (mobile, tablet, desktop)
+- Production build verified
 
-❌ No backend/database (Supabase, etc.)
-❌ No authentication (buttons UI-only)
-❌ No search/filter logic (UI-only)
-❌ No form submissions (CTASection email input is UI-only)
-❌ No review submission functionality
-❌ No user profiles or personalization
+✅ **Authentication:**
+- Supabase integration with email/password auth
+- Login and signup pages functional
+- Middleware for route protection
+- User session management
+
+❌ **Not Implemented:**
+- Search functionality (search bar is UI-only)
+- Form submissions (CTASection email input is UI-only)
+- City detail pages
+- Review submission functionality
+- Like/dislike data persistence (client-side only)
+- Database storage for cities (using mock data)
 
 ### Future Enhancements
 
 To extend this project:
+- Persist like/dislike data to Supabase database
+- Implement search functionality with keyword matching
+- Add city detail pages (`app/cities/[id]`) with full information
+- Store cities in Supabase database instead of mock data
 - Connect CTASection to email service (SendGrid, Mailchimp)
-- Implement HeroSection search + filter logic with API calls
-- Add city detail pages (`app/cities/[id]`)
-- Build backend API routes (`app/api/`)
+- Add user profiles and personalized city recommendations
 - Integrate Supabase for reviews and user data
 - Add authentication (NextAuth.js or similar)
 - Implement actual review submission

@@ -1,12 +1,13 @@
-import { Region, BudgetRange } from '@/types'
+import { Region, BudgetRange, Environment, Season } from '@/types'
 
-export const REGIONS: { name: Region; label: string; emoji: string; count: number }[] = [
-  { name: '수도권', label: '🏙️ 수도권', emoji: '🏙️', count: 2 },
-  { name: '충청', label: '🌾 충청', emoji: '🌾', count: 1 },
-  { name: '전라', label: '🌊 전라', emoji: '🌊', count: 2 },
-  { name: '경상', label: '⛰️ 경상', emoji: '⛰️', count: 2 },
-  { name: '강원', label: '🏔️ 강원', emoji: '🏔️', count: 2 },
-  { name: '제주', label: '🏝️ 제주', emoji: '🏝️', count: 2 },
+export const REGIONS: { name: Region | '전체'; label: string; emoji: string }[] = [
+  { name: '전체', label: '🌏 전체', emoji: '🌏' },
+  { name: '수도권', label: '🏙️ 수도권', emoji: '🏙️' },
+  { name: '경상도', label: '⛰️ 경상도', emoji: '⛰️' },
+  { name: '전라도', label: '🌊 전라도', emoji: '🌊' },
+  { name: '강원도', label: '🏔️ 강원도', emoji: '🏔️' },
+  { name: '제주도', label: '🏝️ 제주도', emoji: '🏝️' },
+  { name: '충청도', label: '🌾 충청도', emoji: '🌾' },
 ]
 
 export const BUDGETS: {
@@ -14,40 +15,67 @@ export const BUDGETS: {
   label: string
   emoji: string
   description: string
-  color: string
 }[] = [
   {
-    value: 'economic',
-    label: '💚 경제적',
+    value: 'under100',
+    label: '💚 100만원 미만',
     emoji: '💚',
-    description: '100-150만원/월',
-    color: 'bg-green-100 text-green-700',
+    description: '100만원 미만',
   },
   {
-    value: 'moderate',
-    label: '💙 적정',
+    value: 'range100to200',
+    label: '💙 100만원~200만원',
     emoji: '💙',
-    description: '150-200만원/월',
-    color: 'bg-blue-100 text-blue-700',
+    description: '100~200만원',
   },
   {
-    value: 'premium',
-    label: '💜 프리미엄',
+    value: 'over200',
+    label: '💜 200만원 이상',
     emoji: '💜',
-    description: '200만원+/월',
-    color: 'bg-purple-100 text-purple-700',
+    description: '200만원 이상',
   },
 ]
 
-export const BUDGET_RANGE_MAP = {
-  economic: { min: 100, max: 150, count: 4 },
-  moderate: { min: 150, max: 200, count: 4 },
-  premium: { min: 200, max: 300, count: 2 },
-}
+export const ENVIRONMENTS: {
+  value: Environment
+  label: string
+  emoji: string
+  description: string
+}[] = [
+  {
+    value: '자연친화',
+    label: '🌿 자연친화',
+    emoji: '🌿',
+    description: '자연과 함께하는 여유로운 환경',
+  },
+  {
+    value: '도심선호',
+    label: '🏢 도심선호',
+    emoji: '🏢',
+    description: '편의시설이 가까운 도심',
+  },
+  {
+    value: '카페작업',
+    label: '☕ 카페작업',
+    emoji: '☕',
+    description: '작업하기 좋은 카페가 많은 곳',
+  },
+  {
+    value: '코워킹 필수',
+    label: '💼 코워킹 필수',
+    emoji: '💼',
+    description: '코워킹 스페이스가 잘 갖춰진 곳',
+  },
+]
 
-export const QUICK_FILTERS = [
-  { id: 'cost', label: '💰 생활비', icon: '💰' },
-  { id: 'internet', label: '📡 인터넷', icon: '📡' },
-  { id: 'cafe', label: '☕ 카페', icon: '☕' },
-  { id: 'weather', label: '🌤️ 날씨', icon: '🌤️' },
+export const SEASONS: {
+  value: Season
+  label: string
+  emoji: string
+  description: string
+}[] = [
+  { value: '봄', label: '🌸 봄', emoji: '🌸', description: '3~5월' },
+  { value: '여름', label: '☀️ 여름', emoji: '☀️', description: '6~8월' },
+  { value: '가을', label: '🍂 가을', emoji: '🍂', description: '9~11월' },
+  { value: '겨울', label: '❄️ 겨울', emoji: '❄️', description: '12~2월' },
 ]

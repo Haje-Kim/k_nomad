@@ -3,20 +3,70 @@
 import { City } from '@/types'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Heart } from 'lucide-react'
+import { ThumbsUp, ThumbsDown } from 'lucide-react'
 import { getUnsplashImage } from '@/lib/unsplash'
 import Image from 'next/image'
 import { useState } from 'react'
+import { BUDGETS, REGIONS, ENVIRONMENTS, SEASONS } from '@/lib/data/constants'
 
 interface CityCardProps {
   city: City
-  variant?: 'default' | 'compact'
 }
 
-export function CityCard({ city, variant = 'default' }: CityCardProps) {
+export function CityCard({ city }: CityCardProps) {
   const [isLiked, setIsLiked] = useState(false)
+  const [isDisliked, setIsDisliked] = useState(false)
+  const [currentLikes, setCurrentLikes] = useState(city.likes)
+  const [currentDislikes, setCurrentDislikes] = useState(city.dislikes)
+
   const imageUrl = getUnsplashImage(city.image)
+
+  const handleLike = () => {
+    if (isLiked) {
+      // 좋아요 취소
+      setIsLiked(false)
+      setCurrentLikes(currentLikes - 1)
+    } else {
+      // 좋아요 추가
+      setIsLiked(true)
+      setCurrentLikes(currentLikes + 1)
+      // 싫어요가 활성화되어 있다면 취소
+      if (isDisliked) {
+        setIsDisliked(false)
+        setCurrentDislikes(currentDislikes - 1)
+      }
+    }
+  }
+
+  const handleDislike = () => {
+    if (isDisliked) {
+      // 싫어요 취소
+      setIsDisliked(false)
+      setCurrentDislikes(currentDislikes - 1)
+    } else {
+      // 싫어요 추가
+      setIsDisliked(true)
+      setCurrentDislikes(currentDislikes + 1)
+      // 좋아요가 활성화되어 있다면 취소
+      if (isLiked) {
+        setIsLiked(false)
+        setCurrentLikes(currentLikes - 1)
+      }
+    }
+  }
+
+  // Helper 함수: 상수 배열에서 label 찾기
+  const getBudgetLabel = (value: string) =>
+    BUDGETS.find(b => b.value === value)?.label || value
+
+  const getRegionLabel = (value: string) =>
+    REGIONS.find(r => r.name === value)?.label || value
+
+  const getEnvironmentLabel = (value: string) =>
+    ENVIRONMENTS.find(e => e.value === value)?.label || value
+
+  const getSeasonLabel = (value: string) =>
+    SEASONS.find(s => s.value === value)?.label || value
 
   return (
     <Card className="overflow-hidden hover:shadow-nature-lg transition-all duration-300 hover:scale-[1.02] h-full rounded-3xl border-2 border-sand bg-cream">
@@ -37,18 +87,6 @@ export function CityCard({ city, variant = 'default' }: CityCardProps) {
             </Badge>
           ))}
         </div>
-
-        {/* Like button */}
-        <button
-          onClick={() => setIsLiked(!isLiked)}
-          className="absolute top-2 right-2 bg-cream/95 hover:bg-cream rounded-full p-2 transition-colors shadow-nature"
-          aria-label="Add to favorites"
-        >
-          <Heart
-            size={18}
-            className={isLiked ? 'fill-terracotta text-terracotta' : 'text-earth'}
-          />
-        </button>
       </div>
 
       {/* Content */}
@@ -60,49 +98,59 @@ export function CityCard({ city, variant = 'default' }: CityCardProps) {
           </h3>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="space-y-1">
-            <div className="flex items-center gap-1 text-earth/80">
-              <span>💵</span>
-              <span>{city.stats.livingCost}만원</span>
-            </div>
-            <div className="flex items-center gap-1 text-earth/80">
-              <span>📡</span>
-              <span>{city.stats.internetSpeed}Mbps</span>
-            </div>
+        {/* Filter Info - Key-Value */}
+        <div className="space-y-2 text-sm">
+          <div className="flex items-start gap-2">
+            <span className="text-moss font-medium min-w-[80px]">예산:</span>
+            <span className="text-earth">{getBudgetLabel(city.budget)}</span>
           </div>
-          <div className="space-y-1">
-            <div className="flex items-center gap-1 text-earth/80">
-              <span>☕</span>
-              <span>{city.stats.cafeCount}개</span>
-            </div>
-            <div className="flex items-center gap-1 text-earth/80">
-              <span>{city.stats.weather}</span>
-              <span>{city.stats.temperature}°C</span>
-            </div>
+          <div className="flex items-start gap-2">
+            <span className="text-moss font-medium min-w-[80px]">지역:</span>
+            <span className="text-earth">{getRegionLabel(city.region)}</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-moss font-medium min-w-[80px]">환경:</span>
+            <span className="text-earth">{city.environment.map(e => getEnvironmentLabel(e)).join(', ')}</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-moss font-medium min-w-[80px]">최고 계절:</span>
+            <span className="text-earth">{city.bestSeason.map(s => getSeasonLabel(s)).join(', ')}</span>
           </div>
         </div>
 
-        {/* Score */}
-        <div className="flex items-center justify-between pt-2 border-t border-sand">
-          <div className="flex items-center gap-1">
-            <span className="text-lg font-semibold">⭐</span>
-            <span className="font-semibold text-earth">{city.rating}</span>
-            <span className="text-xs text-moss">({city.reviewCount})</span>
-          </div>
-          <div className="text-right">
+        {/* Like/Dislike Buttons */}
+        <div className="flex items-center gap-3 pt-2 border-t border-sand">
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all ${
+              isLiked
+                ? 'bg-blue-100 text-blue-600 border-2 border-blue-300'
+                : 'bg-sage/30 text-earth hover:bg-sage/50 border-2 border-sand'
+            }`}
+            aria-label="좋아요"
+          >
+            <ThumbsUp size={16} className={isLiked ? 'fill-blue-600' : ''} />
+            <span className="font-semibold">{currentLikes}</span>
+          </button>
+
+          <button
+            onClick={handleDislike}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all ${
+              isDisliked
+                ? 'bg-red-100 text-red-600 border-2 border-red-300'
+                : 'bg-sage/30 text-earth hover:bg-sage/50 border-2 border-sand'
+            }`}
+            aria-label="싫어요"
+          >
+            <ThumbsDown size={16} className={isDisliked ? 'fill-red-600' : ''} />
+            <span className="font-semibold">{currentDislikes}</span>
+          </button>
+
+          <div className="ml-auto text-right">
             <div className="text-xs text-moss">종합점수</div>
             <div className="font-semibold text-base text-forest">{city.totalScore}점</div>
           </div>
         </div>
-
-        {/* Action Button */}
-        {variant === 'default' && (
-          <Button className="w-full mt-2 rounded-2xl bg-sage hover:bg-moss text-earth border-2 border-sage" variant="outline">
-            상세보기
-          </Button>
-        )}
       </div>
     </Card>
   )

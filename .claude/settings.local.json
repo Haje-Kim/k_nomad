@@ -32,7 +32,12 @@
       "mcp__context7__resolve-library-id",
       "mcp__context7__query-docs",
       "Bash(npm install:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(if exist \"app\\\\register\" rd /s /q \"app\\\\register\")",
+      "Bash(if exist \"app\\\\dashboard\" rd /s /q \"app\\\\dashboard\")",
+      "Bash(timeout 5 tail:*)"
     ]
   }
 }

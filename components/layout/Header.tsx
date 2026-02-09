@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Search, Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react'
+import { Menu, X, User, LogOut } from 'lucide-react'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 export function Header() {
@@ -36,14 +36,8 @@ export function Header() {
     })
 
     return () => subscription.unsubscribe()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const navItems = [
-    { label: '홈', href: '#' },
-    { label: '도시', href: '#' },
-    { label: '커뮤니티', href: '#' },
-    { label: '통계', href: '#' },
-  ]
 
   return (
     <header className="sticky top-0 z-50 bg-cream border-b-2 border-sand shadow-nature">
@@ -56,20 +50,8 @@ export function Header() {
             <span className="sm:hidden">K.N</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a key={item.label} href={item.href} className="text-earth hover:text-forest font-medium transition-colors">
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
           {/* Desktop Right Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="text-moss hover:text-forest transition-colors p-2">
-              <Search size={20} />
-            </button>
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -89,14 +71,6 @@ export function Header() {
                       <p className="text-xs text-moss">{user.email}</p>
                     </div>
                   </DropdownMenuLabel>
-                  <DropdownMenuSeparator className="bg-sand" />
-                  <DropdownMenuItem
-                    onClick={() => router.push('/dashboard')}
-                    className="rounded-xl cursor-pointer hover:bg-sage"
-                  >
-                    <LayoutDashboard size={16} className="mr-2" />
-                    대시보드
-                  </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-sand" />
                   <DropdownMenuItem
                     onClick={async () => {
@@ -128,10 +102,7 @@ export function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            <button className="text-moss hover:text-forest transition-colors p-2">
-              <Search size={20} />
-            </button>
+          <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-moss hover:text-forest transition-colors p-2"
@@ -144,27 +115,12 @@ export function Header() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="md:hidden mt-4 space-y-3 pb-4 border-t-2 border-sand pt-4">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="block text-earth hover:text-forest font-medium transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
             {user ? (
               <>
                 <div className="py-2 px-3 bg-sage/30 rounded-2xl border border-sand">
                   <p className="text-sm font-medium text-earth">{user.email?.split('@')[0]}</p>
                   <p className="text-xs text-moss">{user.email}</p>
                 </div>
-                <Link href="/dashboard" className="block">
-                  <Button className="w-full rounded-2xl bg-sage hover:bg-sage/80 text-earth shadow-nature" variant="outline">
-                    <LayoutDashboard size={16} className="mr-2" />
-                    대시보드
-                  </Button>
-                </Link>
                 <Button
                   onClick={async () => {
                     await fetch('/auth/signout', { method: 'POST' })

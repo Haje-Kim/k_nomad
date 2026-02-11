@@ -57,13 +57,13 @@ export function CTASection() {
         <div className="space-y-3">
           <p className="text-sm text-cream/80">또는 소셜 계정으로 가입</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button variant="outline" className="border-2 border-cream text-cream hover:bg-cream/10 rounded-2xl">
+            <Button variant="outline" className="border-2 border-cream !text-cream hover:bg-cream/10 rounded-2xl">
               🔗 카카오 가입
             </Button>
-            <Button variant="outline" className="border-2 border-cream text-cream hover:bg-cream/10 rounded-2xl">
+            <Button variant="outline" className="border-2 border-cream !text-cream hover:bg-cream/10 rounded-2xl">
               🔗 네이버 가입
             </Button>
-            <Button variant="outline" className="border-2 border-cream text-cream hover:bg-cream/10 rounded-2xl">
+            <Button variant="outline" className="border-2 border-cream !text-cream hover:bg-cream/10 rounded-2xl">
               🔗 구글 가입
             </Button>
           </div>

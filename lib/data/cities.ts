@@ -14,6 +14,17 @@ export const cities: City[] = [
     dislikes: 12,
     tags: ['해변가', '카페천국', '관광도시'],
     budget: 'range100to200',
+    detail: {
+      description: '제주시는 제주도의 행정 중심지로, 아름다운 해변과 한라산을 배경으로 한 자연환경 속에서 일하기 최적의 도시입니다. 제주 공항과 가까워 접근성이 좋으며, 감성 카페가 넘쳐나 카페 작업을 즐기는 디지털 노마드에게 인기가 높습니다.',
+      monthlyRent: '60~90만원',
+      internetSpeed: '500Mbps 이상',
+      transportation: '렌터카/카카오 바이크 권장, 공항버스 운행',
+      coworkingSpots: [
+        { name: '카페 제주해녀', type: '카페', wifi: '빠름', hasPlug: true, pricePerDay: null, description: '해변 뷰 감성 카페, 24시간 운영' },
+        { name: 'Jeju Work Hub', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 25000, description: '1일권 25,000원, 회의실 포함' },
+        { name: '스페이스 돌하르방', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 20000, description: '월정 할인 제공, 커뮤니티 이벤트' },
+      ],
+    },
   },
   {
     id: 'seogwipo',
@@ -28,6 +39,16 @@ export const cities: City[] = [
     dislikes: 15,
     tags: ['조용한', '해변가', '예술'],
     budget: 'range100to200',
+    detail: {
+      description: '서귀포는 제주도 남쪽의 조용한 소도시로, 천지연 폭포와 정방 폭포 등 자연경관이 수려합니다. 관광객이 상대적으로 적어 집중하기 좋은 환경이며, 제주시보다 물가가 저렴한 편입니다. 예술가 커뮤니티가 활성화되어 창의적인 분위기를 즐길 수 있습니다.',
+      monthlyRent: '50~75만원',
+      internetSpeed: '100Mbps 이상',
+      transportation: '렌터카 필수, 시내버스 운행',
+      coworkingSpots: [
+        { name: '카페 이중섭', type: '카페', wifi: '보통', hasPlug: true, pricePerDay: null, description: '이중섭 거리 인근, 예술적 분위기' },
+        { name: '서귀포 소셜 허브', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 18000, description: '월 회원권 할인, 조용한 작업 환경' },
+      ],
+    },
   },
   {
     id: 'busan',
@@ -42,6 +63,18 @@ export const cities: City[] = [
     dislikes: 28,
     tags: ['대도시', '카페천국', '야경'],
     budget: 'over200',
+    detail: {
+      description: '부산은 대한민국 제2의 도시로, 해운대 해변부터 감천 문화마을까지 다양한 매력을 가진 도시입니다. 서울과 달리 여유로운 라이프스타일을 즐기면서도 대도시의 인프라를 누릴 수 있어 많은 디지털 노마드가 선택하는 곳입니다. 코워킹 공간이 다양하게 갖춰져 있습니다.',
+      monthlyRent: '70~120만원',
+      internetSpeed: '1Gbps',
+      transportation: '지하철 2호선 중심, 버스 노선 풍부',
+      coworkingSpots: [
+        { name: '해운대 워크샵', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 30000, description: '해운대 뷰, 프리미엄 코워킹 공간' },
+        { name: '카페 센텀', type: '카페', wifi: '빠름', hasPlug: true, pricePerDay: null, description: '센텀시티 인근, 24시간 운영' },
+        { name: '부산 창업 허브', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 22000, description: '스타트업 커뮤니티 활성, 네트워킹 이벤트' },
+        { name: '광안리 작업실', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 20000, description: '광안대교 야경 감상 가능' },
+      ],
+    },
   },
   {
     id: 'gangneung',
@@ -56,6 +89,16 @@ export const cities: City[] = [
     dislikes: 8,
     tags: ['해변가', '경제적', '조용한'],
     budget: 'under100',
+    detail: {
+      description: '강릉은 동해 해변과 커피 문화로 유명한 강원도 대표 도시입니다. 안목해변 카페 거리는 전국적으로 유명하며, 평창동계올림픽 이후 인프라가 크게 개선되었습니다. 물가가 저렴하고 공기가 맑아 장기 체류 노마드에게 인기입니다.',
+      monthlyRent: '40~65만원',
+      internetSpeed: '500Mbps',
+      transportation: '렌터카 또는 자전거 권장, KTX 강릉역 이용 가능',
+      coworkingSpots: [
+        { name: '안목 카페 테라스', type: '카페', wifi: '빠름', hasPlug: true, pricePerDay: null, description: '바다 뷰 테라스, 강릉커피의 명소' },
+        { name: '강릉 노마드 베이스', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 15000, description: '장기 노마드 커뮤니티 운영, 저렴한 월정액' },
+      ],
+    },
   },
   {
     id: 'jeonju',
@@ -70,6 +113,17 @@ export const cities: City[] = [
     dislikes: 11,
     tags: ['전통', '음식', '문화'],
     budget: 'range100to200',
+    detail: {
+      description: '전주는 한옥마을과 비빔밥으로 유명한 전통문화 도시입니다. 한국의 역사와 문화를 느끼며 일할 수 있는 독특한 경험을 제공합니다. 감성적인 한옥 카페와 현대적인 카페가 조화를 이루고, 음식이 맛있어 일상의 만족도가 높습니다.',
+      monthlyRent: '45~70만원',
+      internetSpeed: '500Mbps',
+      transportation: '시내버스 중심, 도보 이동 가능한 컴팩트한 도심',
+      coworkingSpots: [
+        { name: '한옥마을 작업실', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 18000, description: '한옥 분위기의 독특한 코워킹 공간' },
+        { name: '카페 경기전', type: '카페', wifi: '보통', hasPlug: true, pricePerDay: null, description: '경기전 인근 감성 카페, 한국 전통 음료 제공' },
+        { name: '전주 크리에이티브 허브', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 20000, description: '청년 창업가 네트워크, 스튜디오 공간 보유' },
+      ],
+    },
   },
   {
     id: 'gyeongju',
@@ -84,6 +138,16 @@ export const cities: City[] = [
     dislikes: 7,
     tags: ['역사', '조용한', '경제적'],
     budget: 'under100',
+    detail: {
+      description: '경주는 신라 천년의 고도로, 유네스코 세계문화유산이 가득한 역사 도시입니다. 도심 자체가 거대한 박물관이라 불리며, 곳곳에 유적지와 자연경관이 어우러져 있습니다. 조용하고 물가가 저렴해 집중 작업에 최적화된 환경을 제공합니다.',
+      monthlyRent: '35~55만원',
+      internetSpeed: '100Mbps',
+      transportation: '자전거 문화 발달, 렌터카 이용 권장',
+      coworkingSpots: [
+        { name: '황리단길 카페', type: '카페', wifi: '보통', hasPlug: false, pricePerDay: null, description: '경주 핫플 황리단길, 감성적 분위기' },
+        { name: '경주 스터디 카페', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 12000, description: '24시간 운영, 저렴한 이용료' },
+      ],
+    },
   },
   {
     id: 'sokcho',
@@ -98,6 +162,16 @@ export const cities: City[] = [
     dislikes: 9,
     tags: ['산', '해변가', '자연'],
     budget: 'under100',
+    detail: {
+      description: '속초는 설악산과 동해 바다가 만나는 강원도의 보석 같은 도시입니다. 청초호와 영랑호 등 아름다운 호수도 있어 다양한 자연환경을 즐길 수 있습니다. 최근 케이블카와 워터파크 등 개발로 관광 인프라가 향상되었으나, 아직 조용한 편입니다.',
+      monthlyRent: '38~60만원',
+      internetSpeed: '500Mbps',
+      transportation: '렌터카 권장, 시내버스 운행, KTX 강릉역에서 버스 이용',
+      coworkingSpots: [
+        { name: '청초호 카페', type: '카페', wifi: '빠름', hasPlug: true, pricePerDay: null, description: '호수 전망, 새벽부터 심야까지 운영' },
+        { name: '속초 리모트 스테이션', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 16000, description: '숙소 겸 코워킹 공간, 커뮤니티 활성' },
+      ],
+    },
   },
   {
     id: 'yeosu',
@@ -112,6 +186,17 @@ export const cities: City[] = [
     dislikes: 10,
     tags: ['야경', '해변가', '관광'],
     budget: 'range100to200',
+    detail: {
+      description: '여수는 "밤바다"로 유명한 전라남도의 해양 도시입니다. 이순신 광장과 케이블카, 디오션 워터파크 등 풍부한 관광 자원을 보유하고 있습니다. 해산물이 신선하고 저렴하며, 해안 산책로를 따라 카페들이 늘어서 있어 여유로운 노마드 생활을 즐길 수 있습니다.',
+      monthlyRent: '45~70만원',
+      internetSpeed: '500Mbps',
+      transportation: '시내버스 운행, KTX 여수엑스포역 이용 가능',
+      coworkingSpots: [
+        { name: '돌산도 뷰 카페', type: '카페', wifi: '빠름', hasPlug: true, pricePerDay: null, description: '돌산도 전망, 야경 명소' },
+        { name: '여수 워크스페이스', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 18000, description: '시내 중심가, 회의실 완비' },
+        { name: '이순신 광장 카페거리', type: '카페', wifi: '보통', hasPlug: false, pricePerDay: null, description: '광장 인근 감성 카페 밀집 지역' },
+      ],
+    },
   },
   {
     id: 'seoul',
@@ -126,6 +211,18 @@ export const cities: City[] = [
     dislikes: 45,
     tags: ['대도시', '편의점', '사람들'],
     budget: 'over200',
+    detail: {
+      description: '서울은 세계적인 대도시로, IT 인프라와 스타트업 생태계가 최고 수준입니다. 강남, 성수, 홍대 등 지역마다 독특한 분위기를 가지고 있으며, 24시간 활동 가능한 도시입니다. 빠른 인터넷, 풍부한 코워킹 공간, 다양한 네트워킹 기회가 있어 비즈니스 디지털 노마드에게 최적입니다.',
+      monthlyRent: '80~150만원',
+      internetSpeed: '1Gbps',
+      transportation: '지하철 9호선 포함 22개 노선, 도보+대중교통으로 충분',
+      coworkingSpots: [
+        { name: 'FastFive 강남', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 35000, description: '프리미엄 코워킹, 강남 핵심 위치' },
+        { name: '카페 성수 언더스탠드에비뉴', type: '카페', wifi: '빠름', hasPlug: true, pricePerDay: null, description: '성수 힙스터 카페 특구' },
+        { name: '스파크플러스 홍대', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 28000, description: '홍대 창업 커뮤니티, 다양한 이벤트' },
+        { name: '카카오 공유 오피스', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 40000, description: '판교 IT 클러스터, 테크 네트워킹' },
+      ],
+    },
   },
   {
     id: 'incheon',
@@ -140,5 +237,24 @@ export const cities: City[] = [
     dislikes: 13,
     tags: ['공항근처', '교통', '국제도시'],
     budget: 'range100to200',
+    detail: {
+      description: '인천은 국제공항을 보유한 한국의 관문 도시입니다. 인천국제공항과 가까워 잦은 해외 출장이 필요한 디지털 노마드에게 특히 유리합니다. 송도 신도시는 체계적으로 개발된 스마트시티로 쾌적한 환경을 제공하며, 차이나타운, 개항장 등 역사적 명소도 있습니다.',
+      monthlyRent: '50~80만원',
+      internetSpeed: '1Gbps',
+      transportation: '공항철도, 지하철 1·2호선, 공항버스 등 교통 편리',
+      coworkingSpots: [
+        { name: '송도 코워킹 스퀘어', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 25000, description: '송도 신도시 중심, 현대적 시설' },
+        { name: '인천공항 비즈니스 라운지', type: '코워킹', wifi: '빠름', hasPlug: true, pricePerDay: 30000, description: '공항 내 작업 공간, 출발 전 이용 가능' },
+        { name: '개항장 카페 거리', type: '카페', wifi: '보통', hasPlug: false, pricePerDay: null, description: '근대 건축물 속 감성 카페, 역사 지구' },
+      ],
+    },
   },
 ]
+
+export function getCityById(id: string): City | undefined {
+  return cities.find(city => city.id === id)
+}
+
+export function getAllCityIds(): string[] {
+  return cities.map(city => city.id)
+}

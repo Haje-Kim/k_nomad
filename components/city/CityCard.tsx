@@ -7,6 +7,7 @@ import { ThumbsUp, ThumbsDown } from 'lucide-react'
 import { getUnsplashImage } from '@/lib/unsplash'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { BUDGETS, REGIONS, ENVIRONMENTS, SEASONS } from '@/lib/data/constants'
 
 interface CityCardProps {
@@ -14,6 +15,7 @@ interface CityCardProps {
 }
 
 export function CityCard({ city }: CityCardProps) {
+  const router = useRouter()
   const [isLiked, setIsLiked] = useState(false)
   const [isDisliked, setIsDisliked] = useState(false)
   const [currentLikes, setCurrentLikes] = useState(city.likes)
@@ -21,16 +23,14 @@ export function CityCard({ city }: CityCardProps) {
 
   const imageUrl = getUnsplashImage(city.image)
 
-  const handleLike = () => {
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation()
     if (isLiked) {
-      // 좋아요 취소
       setIsLiked(false)
       setCurrentLikes(currentLikes - 1)
     } else {
-      // 좋아요 추가
       setIsLiked(true)
       setCurrentLikes(currentLikes + 1)
-      // 싫어요가 활성화되어 있다면 취소
       if (isDisliked) {
         setIsDisliked(false)
         setCurrentDislikes(currentDislikes - 1)
@@ -38,16 +38,14 @@ export function CityCard({ city }: CityCardProps) {
     }
   }
 
-  const handleDislike = () => {
+  const handleDislike = (e: React.MouseEvent) => {
+    e.stopPropagation()
     if (isDisliked) {
-      // 싫어요 취소
       setIsDisliked(false)
       setCurrentDislikes(currentDislikes - 1)
     } else {
-      // 싫어요 추가
       setIsDisliked(true)
       setCurrentDislikes(currentDislikes + 1)
-      // 좋아요가 활성화되어 있다면 취소
       if (isLiked) {
         setIsLiked(false)
         setCurrentLikes(currentLikes - 1)
@@ -69,7 +67,10 @@ export function CityCard({ city }: CityCardProps) {
     SEASONS.find(s => s.value === value)?.label || value
 
   return (
-    <Card className="overflow-hidden hover:shadow-nature-lg transition-all duration-300 hover:scale-[1.02] h-full rounded-3xl border-2 border-sand bg-cream">
+    <Card
+      onClick={() => router.push(`/cities/${city.id}`)}
+      className="overflow-hidden hover:shadow-nature-lg transition-all duration-300 hover:scale-[1.02] h-full rounded-3xl border-2 border-sand bg-cream cursor-pointer"
+    >
       {/* Image Container */}
       <div className="relative w-full aspect-video bg-sand overflow-hidden rounded-t-3xl">
         <Image

@@ -71,7 +71,7 @@ export function HeroSection({
         </div>
 
         {/* Filter Section */}
-        <div className="max-w-4xl mx-auto space-y-4">
+        <div className="max-w-7xl mx-auto space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Budget Filter */}
             <div className="space-y-2">
@@ -125,7 +125,7 @@ export function HeroSection({
 
             {/* Season Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-earth/80">최고 계절</label>
+              <label className="text-sm font-medium text-earth/80">계절</label>
               <select
                 value={selectedSeason}
                 onChange={(e) => onSeasonChange(e.target.value as Season | '')}

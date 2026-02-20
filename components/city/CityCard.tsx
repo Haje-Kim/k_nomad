@@ -6,9 +6,10 @@ import { Badge } from '@/components/ui/badge'
 import { ThumbsUp, ThumbsDown } from 'lucide-react'
 import { getUnsplashImage } from '@/lib/unsplash'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { BUDGETS, REGIONS, ENVIRONMENTS, SEASONS } from '@/lib/data/constants'
+import { createClient } from '@/lib/supabase/client'
 
 interface CityCardProps {
   city: City
@@ -16,18 +17,61 @@ interface CityCardProps {
 
 export function CityCard({ city }: CityCardProps) {
   const router = useRouter()
+  const supabase = createClient()
+
   const [isLiked, setIsLiked] = useState(false)
   const [isDisliked, setIsDisliked] = useState(false)
   const [currentLikes, setCurrentLikes] = useState(city.likes)
   const [currentDislikes, setCurrentDislikes] = useState(city.dislikes)
+  const [userId, setUserId] = useState<string | null>(null)
 
   const imageUrl = getUnsplashImage(city.image)
 
-  const handleLike = (e: React.MouseEvent) => {
+  // 로그인 유저의 기존 반응 불러오기
+  useEffect(() => {
+    async function loadUserReaction() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      setUserId(user.id)
+
+      const { data } = await supabase
+        .from('user_city_reactions')
+        .select('reaction')
+        .eq('user_id', user.id)
+        .eq('city_id', city.id)
+        .single()
+
+      if (data) {
+        setIsLiked(data.reaction === 'like')
+        setIsDisliked(data.reaction === 'dislike')
+      }
+    }
+    loadUserReaction()
+  }, [city.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function saveReaction(reaction: 'like' | 'dislike' | null) {
+    if (!userId) return
+
+    if (reaction === null) {
+      await supabase
+        .from('user_city_reactions')
+        .delete()
+        .eq('user_id', userId)
+        .eq('city_id', city.id)
+    } else {
+      await supabase
+        .from('user_city_reactions')
+        .upsert({ user_id: userId, city_id: city.id, reaction })
+    }
+  }
+
+  const handleLike = async (e: React.MouseEvent) => {
     e.stopPropagation()
     if (isLiked) {
       setIsLiked(false)
       setCurrentLikes(currentLikes - 1)
+      await saveReaction(null)
     } else {
       setIsLiked(true)
       setCurrentLikes(currentLikes + 1)
@@ -35,14 +79,16 @@ export function CityCard({ city }: CityCardProps) {
         setIsDisliked(false)
         setCurrentDislikes(currentDislikes - 1)
       }
+      await saveReaction('like')
     }
   }
 
-  const handleDislike = (e: React.MouseEvent) => {
+  const handleDislike = async (e: React.MouseEvent) => {
     e.stopPropagation()
     if (isDisliked) {
       setIsDisliked(false)
       setCurrentDislikes(currentDislikes - 1)
+      await saveReaction(null)
     } else {
       setIsDisliked(true)
       setCurrentDislikes(currentDislikes + 1)
@@ -50,6 +96,7 @@ export function CityCard({ city }: CityCardProps) {
         setIsLiked(false)
         setCurrentLikes(currentLikes - 1)
       }
+      await saveReaction('dislike')
     }
   }
 

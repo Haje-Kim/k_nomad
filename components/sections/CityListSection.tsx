@@ -1,11 +1,11 @@
 'use client'
 
 import { CityCard } from '@/components/city/CityCard'
-import { cities } from '@/lib/data/cities'
 import { useMemo } from 'react'
-import type { BudgetRange, Region, Environment, Season } from '@/types'
+import type { BudgetRange, Region, Environment, Season, City } from '@/types'
 
 interface CityListSectionProps {
+  cities: City[]
   selectedBudget: BudgetRange | ''
   selectedRegion: Region | '전체' | ''
   selectedEnvironment: Environment | ''
@@ -13,6 +13,7 @@ interface CityListSectionProps {
 }
 
 export function CityListSection({
+  cities,
   selectedBudget,
   selectedRegion,
   selectedEnvironment,
@@ -21,29 +22,13 @@ export function CityListSection({
   // 필터링 로직
   const filteredCities = useMemo(() => {
     return cities.filter((city) => {
-      // 예산 필터
-      if (selectedBudget && city.budget !== selectedBudget) {
-        return false
-      }
-
-      // 지역 필터
-      if (selectedRegion && selectedRegion !== '전체' && city.region !== selectedRegion) {
-        return false
-      }
-
-      // 환경 필터 (배열의 일부 포함 여부)
-      if (selectedEnvironment && !city.environment.includes(selectedEnvironment)) {
-        return false
-      }
-
-      // 최고 계절 필터 (배열의 일부 포함 여부)
-      if (selectedSeason && !city.bestSeason.includes(selectedSeason)) {
-        return false
-      }
-
+      if (selectedBudget && city.budget !== selectedBudget) return false
+      if (selectedRegion && selectedRegion !== '전체' && city.region !== selectedRegion) return false
+      if (selectedEnvironment && !city.environment.includes(selectedEnvironment)) return false
+      if (selectedSeason && !city.bestSeason.includes(selectedSeason)) return false
       return true
     })
-  }, [selectedBudget, selectedRegion, selectedEnvironment, selectedSeason])
+  }, [cities, selectedBudget, selectedRegion, selectedEnvironment, selectedSeason])
 
   // 좋아요 순으로 정렬
   const sortedCities = useMemo(() => {

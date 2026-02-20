@@ -32,6 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="stylesheet" href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

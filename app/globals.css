@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "./tw-animate.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -59,7 +59,7 @@
 
 :root {
   /* Nature Font - Using system serif fonts */
-  --font-nature: Georgia, "Times New Roman", serif;
+  --font-nature: 'NanumSquare', 'Nanum Square', sans-serif;
 
   /* Organic radius */
   --radius: 1rem;

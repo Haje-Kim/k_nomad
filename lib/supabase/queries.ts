@@ -4,7 +4,7 @@ import type { Tables } from '@/types/supabase'
 
 type CityRow = Tables<'cities'>
 
-function mapCity(row: CityRow): City {
+function mapCity(row: CityRow, likes?: number, dislikes?: number): City {
   return {
     id: row.id,
     name: row.name,
@@ -14,8 +14,8 @@ function mapCity(row: CityRow): City {
     totalScore: Number(row.total_score),
     environment: row.environment as City['environment'],
     bestSeason: row.best_season as City['bestSeason'],
-    likes: row.likes,
-    dislikes: row.dislikes,
+    likes: likes ?? row.likes,
+    dislikes: dislikes ?? row.dislikes,
     tags: row.tags,
     budget: row.budget as City['budget'],
   }
@@ -23,26 +23,40 @@ function mapCity(row: CityRow): City {
 
 export async function getCities(): Promise<City[]> {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('cities')
-    .select('*')
-    .order('likes', { ascending: false })
+
+  const [{ data: citiesData, error }, { data: reactionsData }] = await Promise.all([
+    supabase.from('cities').select('*'),
+    supabase.from('user_city_reactions').select('city_id, reaction'),
+  ])
 
   if (error) throw error
-  return (data ?? []).map(mapCity)
+
+  const likesMap: Record<string, number> = {}
+  const dislikesMap: Record<string, number> = {}
+  for (const r of reactionsData ?? []) {
+    if (r.reaction === 'like') {
+      likesMap[r.city_id] = (likesMap[r.city_id] ?? 0) + 1
+    } else if (r.reaction === 'dislike') {
+      dislikesMap[r.city_id] = (dislikesMap[r.city_id] ?? 0) + 1
+    }
+  }
+
+  return (citiesData ?? []).map(row => mapCity(row, likesMap[row.id] ?? 0, dislikesMap[row.id] ?? 0))
 }
 
 export async function getCityById(id: string): Promise<City | null> {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('cities')
-    .select('*, city_details(*), coworking_spots(*)')
-    .eq('id', id)
-    .single()
+
+  const [{ data, error }, { data: reactionsData }] = await Promise.all([
+    supabase.from('cities').select('*, city_details(*), coworking_spots(*)').eq('id', id).single(),
+    supabase.from('user_city_reactions').select('reaction').eq('city_id', id),
+  ])
 
   if (error) return null
 
-  const city = mapCity(data)
+  const likes = (reactionsData ?? []).filter(r => r.reaction === 'like').length
+  const dislikes = (reactionsData ?? []).filter(r => r.reaction === 'dislike').length
+  const city = mapCity(data, likes, dislikes)
 
   if (data.city_details) {
     const detail = Array.isArray(data.city_details)

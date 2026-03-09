@@ -15,6 +15,7 @@ interface HeroSectionProps {
   onRegionChange: (value: Region | '전체') => void
   onEnvironmentChange: (value: Environment | '') => void
   onSeasonChange: (value: Season | '') => void
+  cityCount: number
 }
 
 export function HeroSection({
@@ -26,6 +27,7 @@ export function HeroSection({
   onRegionChange,
   onEnvironmentChange,
   onSeasonChange,
+  cityCount,
 }: HeroSectionProps) {
   const handleReset = () => {
     onBudgetChange('')
@@ -46,10 +48,10 @@ export function HeroSection({
         {/* Headline */}
         <div className="text-center space-y-4">
           <h1 className="text-3xl lg:text-5xl font-bold text-earth">
-            대한민국에서 노마드로 살기 좋은 도시
+            한국에서 디지털 노마드로 살기 좋은 도시
           </h1>
           <p className="text-lg lg:text-xl text-earth/70">
-            10개 도시 | 실시간 데이터
+            총 {cityCount}개 도시 | 실시간 데이터
           </p>
         </div>
 

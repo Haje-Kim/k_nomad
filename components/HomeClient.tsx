@@ -8,9 +8,10 @@ import type { BudgetRange, Region, Environment, Season, City } from '@/types'
 
 interface HomeClientProps {
   cities: City[]
+  cityCount: number
 }
 
-export function HomeClient({ cities }: HomeClientProps) {
+export function HomeClient({ cities, cityCount }: HomeClientProps) {
   const [selectedBudget, setSelectedBudget] = useState<BudgetRange | ''>('')
   const [selectedRegion, setSelectedRegion] = useState<Region | '전체' | ''>('전체')
   const [selectedEnvironment, setSelectedEnvironment] = useState<Environment | ''>('')
@@ -27,6 +28,7 @@ export function HomeClient({ cities }: HomeClientProps) {
         onRegionChange={setSelectedRegion}
         onEnvironmentChange={setSelectedEnvironment}
         onSeasonChange={setSelectedSeason}
+        cityCount={cityCount}
       />
       <CityListSection
         cities={cities}

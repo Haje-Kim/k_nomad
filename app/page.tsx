@@ -1,8 +1,8 @@
 import { HomeClient } from '@/components/HomeClient'
-import { getCities } from '@/lib/supabase/queries'
+import { getCities, getCityCount } from '@/lib/supabase/queries'
 
 export default async function Home() {
-  const cities = await getCities()
+  const [cities, cityCount] = await Promise.all([getCities(), getCityCount()])
 
-  return <HomeClient cities={cities} />
+  return <HomeClient cities={cities} cityCount={cityCount} />
 }

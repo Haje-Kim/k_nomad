@@ -48,7 +48,7 @@ export function HeroSection({
         {/* Headline */}
         <div className="text-center space-y-4">
           <h1 className="text-3xl lg:text-5xl font-bold text-earth">
-            한국에서 디지털 노마드로 살기 좋은 도시
+            한국무역협회 KITA.net
           </h1>
           <p className="text-lg lg:text-xl text-earth/70">
             총 {cityCount}개 도시 | 실시간 데이터
